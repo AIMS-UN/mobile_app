@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../services/auth.dart' as auth;
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -10,13 +12,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String response = '';
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final username = 'mi username';
+  final password = '123123123';
+  final role = 'teacher';
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +29,57 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'Response: ',
             ),
             Text(
-              '$_counter',
+              response,
               style: Theme.of(context).textTheme.headline4,
+            ),
+            TextButton(
+              onPressed: () async {
+                final Map<String, dynamic> data = await auth.login(
+                  username,
+                  password,
+                );
+                setState(() {
+                  response = data.toString();
+                });
+              },
+              child: const Text('Login'),
+            ),
+            TextButton(
+              onPressed: () async {
+                final Map<String, dynamic> data = await auth.register(
+                  username,
+                  password,
+                  role,
+                );
+                setState(() {
+                  response = data.toString();
+                });
+              },
+              child: const Text('Register'),
+            ),
+            TextButton(
+              onPressed: () async {
+                final Map<String, dynamic> data = await auth.myAccount();
+                setState(() {
+                  response = data.toString();
+                });
+              },
+              child: const Text('My Account'),
+            ),
+            TextButton(
+              onPressed: () async {
+                final Map<String, dynamic> data = await auth.logout();
+                setState(() {
+                  response = data.toString();
+                });
+              },
+              child: const Text('Logout'),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
