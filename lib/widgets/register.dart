@@ -3,9 +3,20 @@ import 'package:flutter/material.dart';
 import 'background.dart';
 import 'login.dart';
 
-class RegisterScreen extends StatelessWidget{
+enum SingingCharacter { student, teacher }
+
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
-  Widget build(BuildContext context){
+  State<RegisterScreen> createState() => _RegisterScreen();
+}
+
+class _RegisterScreen extends State<RegisterScreen> {
+  SingingCharacter _character = SingingCharacter.student;
+
+  @override
+  Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Background(
@@ -20,8 +31,7 @@ class RegisterScreen extends StatelessWidget{
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF2661FA),
-                    fontSize: 36
-                ),
+                    fontSize: 36),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -48,10 +58,47 @@ class RegisterScreen extends StatelessWidget{
             ),
             SizedBox(height: size.height * 0.03),
             Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ListTile(
+                      title: const Text('Student'),
+                      leading: Radio<SingingCharacter>(
+                        value: SingingCharacter.student,
+                        groupValue: _character,
+                        onChanged: (SingingCharacter? value) {
+                          setState(() {
+                            _character = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListTile(
+                      title: const Text('Teacher'),
+                      leading: Radio<SingingCharacter>(
+                        value: SingingCharacter.teacher,
+                        groupValue: _character,
+                        onChanged: (SingingCharacter? value) {
+                          setState(() {
+                            _character = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: size.height * 0.03),
+            Container(
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: TextButton(
-                onPressed: () { },
+                onPressed: () {},
                 style: TextButton.styleFrom(
                   primary: Colors.white,
                 ),
@@ -61,12 +108,10 @@ class RegisterScreen extends StatelessWidget{
                   width: size.width * 0.5,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(80.0),
-                      gradient: const LinearGradient(
-                          colors:[
-                            Color.fromARGB(255, 255, 136, 34),
-                            Color.fromARGB(255, 255, 177, 41)
-                          ])
-                  ),
+                      gradient: const LinearGradient(colors: [
+                        Color.fromARGB(255, 100, 255, 34),
+                        Color.fromARGB(255, 42, 73, 0)
+                      ])),
                   padding: const EdgeInsets.all(0),
                   child: const Text(
                     "Sign Up",
@@ -74,8 +119,7 @@ class RegisterScreen extends StatelessWidget{
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        fontSize: 20
-                    ),
+                        fontSize: 20),
                   ),
                 ),
               ),
@@ -84,16 +128,16 @@ class RegisterScreen extends StatelessWidget{
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: GestureDetector(
-                onTap: ()=>{
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen() ))
+                onTap: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()))
                 },
                 child: const Text(
                   "Already have an Account? Sign In",
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF2661FA)
-                  ),
+                      color: Color(0xFF2661FA)),
                 ),
               ),
             ),
