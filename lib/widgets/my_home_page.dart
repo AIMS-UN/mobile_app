@@ -18,67 +18,108 @@ class _MyHomePageState extends State<MyHomePage> {
   final password = '123123123';
   final role = 'teacher';
 
+  TextEditingController user = TextEditingController();
+  TextEditingController passwordd = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Response: ',
+      backgroundColor: Colors.white,
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      // ),
+      body: SingleChildScrollView(
+        child: Container(
+          margin:
+              const EdgeInsets.only(top: 50, left: 20, right: 20, bottom: 50),
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(height: 100),
+                Image.asset("assets/buho.png", height: 200),
+                const SizedBox(height: 5),
+                TextField(
+                  controller: user,
+                  decoration: const InputDecoration(hintText: "username"),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: passwordd,
+                  obscureText: true,
+                  decoration: const InputDecoration(hintText: "password"),
+                ),
+                const SizedBox(height: 25),
+                Container(
+                  margin: const EdgeInsets.only(top: 50),
+                  width: 200,
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: TextButton(
+                    onPressed: () async {
+                      final Map<String, dynamic> data = await auth.login(
+                        username,
+                        password,
+                      );
+                      setState(() {
+                        response = data.toString();
+                      });
+                    },
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
+                ),
+                // TextButton(
+                //  onPressed: () async {
+                //     final Map<String, dynamic> data = await auth.login(
+                //       username,
+                //       password,
+                //     );
+                //     setState(() {
+                //       response = data.toString();
+                //     });
+                //   },
+                //   child: const Text('Login'),
+                // ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () async {
+                    final Map<String, dynamic> data = await auth.register(
+                      username,
+                      password,
+                      role,
+                    );
+                    setState(() {
+                      response = data.toString();
+                    });
+                  },
+                  child: const Text('Register'),
+                ),
+                // TextButton(
+                //   onPressed: () async {
+                //     final Map<String, dynamic> data = await auth.myAccount();
+                //     setState(() {
+                //       response = data.toString();
+                //     });
+                //   },
+                //   child: const Text('My Account'),
+                // ),
+                // TextButton(
+                //   onPressed: () async {
+                //     final Map<String, dynamic> data = await auth.logout();
+                //     setState(() {
+                //       response = data.toString();
+                //     });
+                //   },
+                //   child: const Text('Logout'),
+                // ),
+              ],
             ),
-            Text(
-              response,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            TextButton(
-              onPressed: () async {
-                final Map<String, dynamic> data = await auth.login(
-                  username,
-                  password,
-                );
-                setState(() {
-                  response = data.toString();
-                });
-              },
-              child: const Text('Login'),
-            ),
-            TextButton(
-              onPressed: () async {
-                final Map<String, dynamic> data = await auth.register(
-                  username,
-                  password,
-                  role,
-                );
-                setState(() {
-                  response = data.toString();
-                });
-              },
-              child: const Text('Register'),
-            ),
-            TextButton(
-              onPressed: () async {
-                final Map<String, dynamic> data = await auth.myAccount();
-                setState(() {
-                  response = data.toString();
-                });
-              },
-              child: const Text('My Account'),
-            ),
-            TextButton(
-              onPressed: () async {
-                final Map<String, dynamic> data = await auth.logout();
-                setState(() {
-                  response = data.toString();
-                });
-              },
-              child: const Text('Logout'),
-            ),
-          ],
+          ),
         ),
       ),
     );
