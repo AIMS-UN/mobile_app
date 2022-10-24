@@ -3,9 +3,16 @@ import 'package:flutter/material.dart';
 
 import 'background.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreen();
+}
+class _LoginScreen extends StatelessWidget {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -30,8 +37,9 @@ class LoginScreen extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 40),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: usernameController,
+                decoration: const InputDecoration(
                   labelText: "Username",
                 ),
               ),
@@ -40,8 +48,9 @@ class LoginScreen extends StatelessWidget {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 40),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: passwordController,
+                decoration: const InputDecoration(
                   labelText: "Password",
                 ),
                 obscureText: true,
@@ -60,7 +69,11 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.centerRight,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () async {
+                   final Map<String, dynamic> data = await auth.login(
+                      usernameController.text,
+                      passwordController.text);
+                },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.white,
                 ),
