@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () {},
                 style: TextButton.styleFrom(
-                  primary: Colors.white,
+                  foregroundColor: Colors.white,
                 ),
                 child: Container(
                   alignment: Alignment.center,

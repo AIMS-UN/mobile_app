@@ -18,7 +18,7 @@ void updateCookie(http.Response response) {
 
 Future<http.Response> query(String query) async {
   final http.Response response = await http.post(
-    Uri.parse('$baseUrl/graphql'),
+    Uri.parse(baseUrl),
     headers: headers,
     body: jsonEncode(<String, String>{'query': query}),
   );
