@@ -25,9 +25,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
       body: SingleChildScrollView(
         child: Container(
           margin:
