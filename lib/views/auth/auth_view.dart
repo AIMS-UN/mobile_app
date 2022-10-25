@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'login_view.dart';
 import 'profile_view.dart';
 import 'signup_view.dart';
+import '/services/auth.dart' as auth;
 
 class AuthView extends StatefulWidget {
   final Function(bool newStatus) isLoggedIn;
@@ -33,18 +34,14 @@ class _AuthViewState extends State<AuthView> {
   Widget build(BuildContext context) {
     switch (_pageState) {
       case 'Login':
-        // return LoginView(
-        //   switchPage: _switchPageState,
-        // );
-        return LoginView(
-          switchPage: _switchPageState,
-        );
+        return LoginView(switchPage: _switchPageState);
       case 'Signup':
-        return SignupView(
-          switchPage: _switchPageState,
-        );
+        return SignupView(switchPage: _switchPageState);
       case 'Profile':
-        return ProfileView(logout: () => _switchPageState('Login'));
+        return ProfileView(logout: () async {
+          await auth.logout();
+          _switchPageState('Login');
+        });
       default:
         return Container();
     }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/ui_helpers.dart';
-import '../../../layouts/auth_form.dart';
-import '../../../shared/form/form_helpers.dart';
+import '/layouts/auth_form.dart';
+import '/shared/form/form_helpers.dart';
+import '/shared/ui_helpers.dart';
+import '/services/auth.dart' as auth;
 
 class SignupView extends StatefulWidget {
   final Function(String pageState) switchPage;
@@ -41,12 +42,18 @@ class _SignupViewState extends State<SignupView> {
       ],
       onAlreadyHaveAccount: () => widget.switchPage('Login'),
       onSubmit: () async {
-        print('Signup');
-        print('Username: ${_usernameController.text}');
-        print('Password: ${_passwordController.text}');
-        print('Role: ${_roleController.text}');
-        await Future.delayed(const Duration(seconds: 3));
-        widget.switchPage('Profile');
+        final response = await auth.register(
+          _usernameController.text,
+          _passwordController.text,
+          _roleController.text.toLowerCase(),
+        );
+
+        if (response['error'] != null) {
+          print('Error: ${response['error']}');
+        } else {
+          print('Success: ${response['username']}');
+          widget.switchPage('Profile');
+        }
       },
       showTerms: true,
     );

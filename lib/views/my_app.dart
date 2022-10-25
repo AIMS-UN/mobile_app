@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../themes/light.dart';
-import '../views/auth/auth_view.dart';
-import 'background.dart';
+import 'auth/auth_view.dart';
+import '../widgets/background.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -25,7 +25,7 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  static int _selectedIndex = 0;
+  static int _selectedIndex = 1;
 
   void _updateIndex(int index) {
     setState(() {
@@ -36,9 +36,6 @@ class _MainViewState extends State<MainView> {
   // creat a login status variable
   bool _isLoggedIn = false;
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,10 +43,16 @@ class _MainViewState extends State<MainView> {
         index: _selectedIndex,
         children: [
           const Background(
-            child: Text('Index 0: Home', style: optionStyle),
+            child: Text(
+              'Business',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
           ),
           const Background(
-            child: Text('Index 3: Settings', style: optionStyle),
+            child: Text(
+              'Home',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
           ),
           Background(
             child: AuthView(isLoggedIn: (newStatus) {

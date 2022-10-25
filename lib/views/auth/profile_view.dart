@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../shared/ui_helpers.dart';
+import '/shared/ui_helpers.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key, required this.logout});
@@ -11,22 +11,20 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'Profile',
-              style: TextStyle(fontSize: 30),
-            ),
-            verticalSpaceMedium,
-            ElevatedButton(
-              onPressed: () => logout(),
-              child: const Text('Logout'),
-            ),
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text(
+            'Profile',
+            style: TextStyle(fontSize: 30),
+          ),
+          verticalSpaceMedium,
+          ElevatedButton(
+            onPressed: () => logout(),
+            child: const Text('Logout'),
+          ),
+        ],
       ),
     );
   }
