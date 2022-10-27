@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import '../config/api.dart' as api;
+import '/config/api.dart' as api;
 
 Future<Map<String, dynamic>> login(String username, String password) async {
   final response = await api.query('''
@@ -12,14 +10,13 @@ Future<Map<String, dynamic>> login(String username, String password) async {
       }
     }
   ''');
-  final body = json.decode(response.body);
-  if (body['data'] == null) {
-    return {'error': body['errors'][0]['message']};
+  if (response['data'] == null) {
+    // return {'error': response['errors'][0]['message']};
+    return {'error': 'An error occured'};
   }
-  return body['data']['login'];
+  return {'data': response['data']['login']};
 }
 
-// register
 Future<Map<String, dynamic>> register(
     String username, String password, String role) async {
   final response = await api.query('''
@@ -31,14 +28,13 @@ Future<Map<String, dynamic>> register(
       }
     }
   ''');
-  final body = json.decode(response.body);
-  if (body['data'] == null) {
-    return {'error': body['errors'][0]['message']};
+  if (response['data'] == null) {
+    // return {'error': response['errors'][0]['message']};
+    return {'error': 'An error occured'};
   }
-  return body['data']['register'];
+  return {'data': response['data']['register']};
 }
 
-// get myAccount
 Future<Map<String, dynamic>> myAccount() async {
   final response = await api.query('''
     query {
@@ -49,23 +45,22 @@ Future<Map<String, dynamic>> myAccount() async {
       }
     }
   ''');
-  final body = json.decode(response.body);
-  if (body['data'] == null) {
-    return {'error': body['errors'][0]['message']};
+  if (response['data'] == null) {
+    // return {'error': response['errors'][0]['message']};
+    return {'error': 'An error occured'};
   }
-  return body['data']['myAccount'];
+  return {'data': response['data']['myAccount']};
 }
 
-// logout
 Future<Map<String, dynamic>> logout() async {
   final response = await api.query('''
     mutation {
       logout
     }
   ''');
-  final body = json.decode(response.body);
-  if (body['data'] == null) {
-    return {'error': body['errors'][0]['message']};
+  if (response['data'] == null) {
+    // return {'error': response['errors'][0]['message']};
+    return {'error': 'An error occured'};
   }
-  return body['data'];
+  return {'data': response['data']['logout']};
 }
