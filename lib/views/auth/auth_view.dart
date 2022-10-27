@@ -17,7 +17,6 @@ class AuthView extends StatefulWidget {
 class _AuthViewState extends State<AuthView> {
   String _pageState = 'Login';
 
-  // switch between login and register
   void _switchPageState(String pageState) {
     setState(() {
       _pageState = pageState;

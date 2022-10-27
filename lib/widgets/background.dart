@@ -52,13 +52,11 @@ class Background extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          // Load the 'buho.png' image from the assets folder
           Positioned(
             top: 0,
             left: 0,
             child: Image.asset(
               "assets/buho.png",
-              // constant width and height
               width: 150,
             ),
           ),

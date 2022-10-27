@@ -33,7 +33,6 @@ class _MainViewState extends State<MainView> {
     });
   }
 
-  // creat a login status variable
   bool _isLoggedIn = false;
 
   @override
@@ -77,7 +76,6 @@ class _MainViewState extends State<MainView> {
                   label: 'Profile',
                 )
               : const BottomNavigationBarItem(
-                  // auth icon
                   icon: Icon(Icons.login),
                   label: 'Auth',
                 ),

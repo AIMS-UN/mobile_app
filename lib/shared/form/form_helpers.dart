@@ -41,8 +41,6 @@ Widget formConfirmPassword(
   );
 }
 
-// username field
-// all lowercase, and add always an @unal.edu.co
 Widget formUsername(TextEditingController controller) {
   TextFormField username = TextFormField(
     decoration: const InputDecoration(
@@ -53,7 +51,6 @@ Widget formUsername(TextEditingController controller) {
     autovalidateMode: AutovalidateMode.onUserInteraction,
     onChanged: (value) => controller.text = value,
   );
-  // domain
   return Row(
     children: <Widget>[
       Expanded(
@@ -64,7 +61,6 @@ Widget formUsername(TextEditingController controller) {
   );
 }
 
-// dropdown widget
 Widget formDropdown<T>({
   required String label,
   required List<T> items,
