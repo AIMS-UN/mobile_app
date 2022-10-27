@@ -1,5 +1,3 @@
-// basic profile view with a logout button
-
 import 'package:flutter/material.dart';
 
 import '/shared/ui_helpers.dart';

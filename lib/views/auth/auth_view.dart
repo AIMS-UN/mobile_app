@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '/services/auth.dart' as auth;
 import 'login_view.dart';
 import 'profile_view.dart';
 import 'signup_view.dart';
-import '/services/auth.dart' as auth;
 
 class AuthView extends StatefulWidget {
   final Function(bool newStatus) isLoggedIn;

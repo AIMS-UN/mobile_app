@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../shared/ui_helpers.dart';
+import '/shared/ui_helpers.dart';
 
 class FormLayout extends StatefulWidget {
   final String title;
@@ -8,6 +8,8 @@ class FormLayout extends StatefulWidget {
   final Future<void> Function() onSubmit;
   final List<Widget> form;
   final bool showTerms;
+
+  final ValueNotifier<String> responseMessage;
 
   final void Function()? onForgotPassword;
   final void Function()? onAlreadyHaveAccount;
@@ -23,6 +25,7 @@ class FormLayout extends StatefulWidget {
     this.onAlreadyHaveAccount,
     this.onCreateAccount,
     this.showTerms = false,
+    required this.responseMessage,
   });
 
   @override
@@ -64,6 +67,21 @@ class _FormLayoutState extends State<FormLayout> {
                 ),
               ),
             verticalSpaceMedium,
+            ValueListenableBuilder<String>(
+              valueListenable: widget.responseMessage,
+              builder: (context, value, child) {
+                if (value.isEmpty) return const SizedBox.shrink();
+                return Column(
+                  children: [
+                    Text(
+                      value,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                    verticalSpaceSmall,
+                  ],
+                );
+              },
+            ),
             _busy
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
@@ -79,6 +97,7 @@ class _FormLayoutState extends State<FormLayout> {
                     },
                     child: Text(widget.submitText),
                   ),
+            verticalSpaceMedium,
             if (widget.onAlreadyHaveAccount != null)
               Align(
                 alignment: Alignment.center,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../themes/light.dart';
+import '/themes/light.dart';
+import '/widgets/background.dart';
 import 'auth/auth_view.dart';
-import '../widgets/background.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

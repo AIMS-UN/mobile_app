@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '/shared/ui_helpers.dart';
 import '/layouts/auth_form.dart';
-import '/shared/form/form_helpers.dart';
 import '/services/auth.dart' as auth;
+import '/shared/form/form_helpers.dart';
+import '/shared/ui_helpers.dart';
 
 class LoginView extends StatefulWidget {
   final Function(String pageState) switchPage;
@@ -21,6 +21,8 @@ class _LoginViewState extends State<LoginView> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  final _responseMessage = ValueNotifier<String>('');
+
   @override
   Widget build(BuildContext context) {
     return FormLayout(
@@ -34,6 +36,7 @@ class _LoginViewState extends State<LoginView> {
       ],
       onForgotPassword: () => widget.switchPage('ForgotPassword'),
       onCreateAccount: () => widget.switchPage('Signup'),
+      responseMessage: _responseMessage,
       onSubmit: () async {
         final response = await auth.login(
           _usernameController.text,
@@ -42,10 +45,12 @@ class _LoginViewState extends State<LoginView> {
 
         if (response['error'] != null) {
           print('Error: ${response['error']}');
-        } else {
-          print('Success: ${response['username']}');
-          widget.switchPage('Profile');
+          _responseMessage.value = response['error'];
+          return;
         }
+
+        print('Success: ${response['data']['username']}');
+        widget.switchPage('Profile');
       },
     );
   }
