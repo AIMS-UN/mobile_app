@@ -15,6 +15,7 @@ final ThemeData ktdLight = ThemeData(
     brightness: Brightness.light,
   ),
   primarySwatch: Colors.blue,
+  fontFamily: "Nunito Sans",
   backgroundColor: const Color(0xFFFFFFFF),
   scaffoldBackgroundColor: const Color(0xFFFFFFFF),
 );

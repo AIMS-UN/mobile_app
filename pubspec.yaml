@@ -9,20 +9,24 @@ environment:
   sdk: ">=2.18.2 <3.0.0"
 
 dependencies:
+  cupertino_icons: ^1.0.2
+  curved_navigation_bar: ^1.0.3
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
   http: ^0.13.5
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
 
   flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
   fluttertoast: ^8.1.1
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Nunito Sans
+      fonts:
+        - asset: fonts/NunitoSans-Regular.ttf
   assets:
     - assets/
