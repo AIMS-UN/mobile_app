@@ -70,7 +70,7 @@ class _MenuState extends State<Menu> {
       bottomNavigationBar: CurvedNavigationBar(
         items: items,
         // color: const Color(0xff3a85c7),
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).colorScheme.primary,
         backgroundColor: Colors.transparent,
         index: numpage,
         onTap: onPage,

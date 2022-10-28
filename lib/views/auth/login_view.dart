@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '/widgets/background.dart';
 import '/layouts/auth_form.dart';
 import '/services/auth.dart' as auth;
 import '/shared/form/form_helpers.dart';

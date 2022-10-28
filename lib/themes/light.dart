@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 final ThemeData ktdLight = ThemeData(
   colorScheme: const ColorScheme(
-    primary: Color(0xFF6200EE),
+    primary: Color(0xff3a85c7),
     secondary: Color(0xFF03DAC6),
     surface: Color(0xFFFFFFFF),
     background: Color(0xFFFFFFFF),
