@@ -68,6 +68,7 @@ Widget formDropdown<T>({
   required TextEditingController controller,
 }) {
   return DropdownButtonFormField<T>(
+    isExpanded: true,
     decoration: InputDecoration(
       labelText: label,
     ),
@@ -76,7 +77,10 @@ Widget formDropdown<T>({
         .map(
           (item) => DropdownMenuItem<T>(
             value: item,
-            child: Text(item.toString()),
+            child: Text(
+              item.toString(),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         )
         .toList(),
