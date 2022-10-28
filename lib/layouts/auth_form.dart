@@ -18,7 +18,7 @@ class FormLayout extends StatefulWidget {
 
   const FormLayout({
     super.key,
-    required this.title,
+    this.title = '',
     required this.submitText,
     required this.onSubmit,
     required this.form,
@@ -40,114 +40,113 @@ class _FormLayoutState extends State<FormLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Background(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(widget.title,
-                    style: Theme.of(context).textTheme.headline3!),
-                verticalSpaceMedium,
-                ...widget.form,
-                if (widget.onForgotPassword != null) verticalSpaceSmall,
-                if (widget.onForgotPassword != null)
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: widget.onForgotPassword,
-                      child: Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ),
-                verticalSpaceMedium,
-                ValueListenableBuilder<String>(
-                  valueListenable: widget.responseMessage,
-                  builder: (context, value, child) {
-                    if (value.isEmpty) return const SizedBox.shrink();
-                    return Column(
-                      children: [
-                        Text(
-                          value,
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                        verticalSpaceSmall,
-                      ],
-                    );
-                  },
-                ),
-                _busy
-                    ? const CircularProgressIndicator()
-                    : ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 50),
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            setState(() => _busy = true);
-                            await widget.onSubmit();
-                            setState(() => _busy = false);
-                          }
-                        },
-                        child: Text(widget.submitText),
-                      ),
-                verticalSpaceMedium,
-                if (widget.onAlreadyHaveAccount != null)
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: widget.onAlreadyHaveAccount,
-                      child: Text(
-                        'Already have an account? Login',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  )
-                else if (widget.onCreateAccount != null)
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: widget.onCreateAccount,
-                      child: Text(
-                        'Don\'t have an account? Create one',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ),
-                if (widget.onAlreadyHaveAccount != null) verticalSpaceTiny,
-                if (widget.showTerms) verticalSpaceRegular,
-                if (widget.showTerms)
-                  Text(
-                    'By signing up, you agree to our Terms of Service and Privacy Policy',
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            if (widget.title.isNotEmpty)
+              Text(
+                widget.title,
+                style: Theme.of(context).textTheme.headline3,
+              ),
+            if (widget.title.isNotEmpty) verticalSpaceMedium,
+            ...widget.form,
+            if (widget.onForgotPassword != null) verticalSpaceSmall,
+            if (widget.onForgotPassword != null)
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: widget.onForgotPassword,
+                  child: Text(
+                    'Forgot Password?',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
+                      decoration: TextDecoration.underline,
                     ),
                   ),
-              ],
+                ),
+              ),
+            verticalSpaceMedium,
+            ValueListenableBuilder<String>(
+              valueListenable: widget.responseMessage,
+              builder: (context, value, child) {
+                if (value.isEmpty) return const SizedBox.shrink();
+                return Column(
+                  children: [
+                    Text(
+                      value,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                    verticalSpaceSmall,
+                  ],
+                );
+              },
             ),
-          ),
+            _busy
+                ? const CircularProgressIndicator()
+                : ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        setState(() => _busy = true);
+                        await widget.onSubmit();
+                        setState(() => _busy = false);
+                      }
+                    },
+                    child: Text(widget.submitText),
+                  ),
+            verticalSpaceMedium,
+            if (widget.onAlreadyHaveAccount != null)
+              Align(
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTap: widget.onAlreadyHaveAccount,
+                  child: Text(
+                    'Already have an account? Login',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              )
+            else if (widget.onCreateAccount != null)
+              Align(
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTap: widget.onCreateAccount,
+                  child: Text(
+                    'Don\'t have an account? Create one',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ),
+            if (widget.onAlreadyHaveAccount != null) verticalSpaceTiny,
+            if (widget.showTerms) verticalSpaceRegular,
+            if (widget.showTerms)
+              Text(
+                'By signing up, you agree to our Terms of Service and Privacy Policy',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+          ],
         ),
       ),
     );

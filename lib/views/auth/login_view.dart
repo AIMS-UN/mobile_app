@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/background.dart';
 import '/layouts/auth_form.dart';
 import '/services/auth.dart' as auth;
 import '/shared/form/form_helpers.dart';
@@ -36,24 +37,28 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return FormLayout(
-      title: 'Login',
-      submitText: 'Login',
-      form: <Widget>[
-        formUsername(_usernameController),
-        verticalSpaceSmall,
-        formPassword(_passwordController),
-        verticalSpaceSmall,
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, "menu");
-          },
-          child: const Text("Go to menu"),
-        )
-      ],
-      responseMessage: _responseMessage,
-      onCreateAccount: () => Navigator.pushNamed(context, "register"),
-      onSubmit: () => _onSubmit(() => Navigator.pushNamed(context, "menu")),
+    return Scaffold(
+      body: Background(
+        child: FormLayout(
+          title: 'Login',
+          submitText: 'Login',
+          form: <Widget>[
+            formUsername(_usernameController),
+            verticalSpaceSmall,
+            formPassword(_passwordController),
+            verticalSpaceSmall,
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "menu");
+              },
+              child: const Text("Go to menu"),
+            )
+          ],
+          responseMessage: _responseMessage,
+          onCreateAccount: () => Navigator.pushNamed(context, "register"),
+          onSubmit: () => _onSubmit(() => Navigator.pushNamed(context, "menu")),
+        ),
+      ),
     );
   }
 }
