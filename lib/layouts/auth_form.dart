@@ -4,13 +4,13 @@ import '/widgets/background.dart';
 import '/shared/ui_helpers.dart';
 
 class FormLayout extends StatefulWidget {
-  final String title;
+  final String? title;
   final String submitText;
-  final Future<void> Function() onSubmit;
+  final Future<void> Function()? onSubmit;
   final List<Widget> form;
   final bool showTerms;
 
-  final ValueNotifier<String> responseMessage;
+  final ValueNotifier<String>? responseMessage;
 
   final void Function()? onForgotPassword;
   final void Function()? onAlreadyHaveAccount;
@@ -18,15 +18,15 @@ class FormLayout extends StatefulWidget {
 
   const FormLayout({
     super.key,
-    this.title = '',
-    required this.submitText,
-    required this.onSubmit,
+    this.title,
+    this.submitText = 'Submit',
+    this.onSubmit,
     required this.form,
     this.onForgotPassword,
     this.onAlreadyHaveAccount,
     this.onCreateAccount,
     this.showTerms = false,
-    required this.responseMessage,
+    this.responseMessage,
   });
 
   @override
@@ -47,12 +47,12 @@ class _FormLayoutState extends State<FormLayout> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (widget.title.isNotEmpty)
+            if (widget.title != null)
               Text(
-                widget.title,
+                widget.title!,
                 style: Theme.of(context).textTheme.headline3,
               ),
-            if (widget.title.isNotEmpty) verticalSpaceMedium,
+            if (widget.title != null) verticalSpaceMedium,
             ...widget.form,
             if (widget.onForgotPassword != null) verticalSpaceSmall,
             if (widget.onForgotPassword != null)
@@ -72,36 +72,38 @@ class _FormLayoutState extends State<FormLayout> {
                 ),
               ),
             verticalSpaceMedium,
-            ValueListenableBuilder<String>(
-              valueListenable: widget.responseMessage,
-              builder: (context, value, child) {
-                if (value.isEmpty) return const SizedBox.shrink();
-                return Column(
-                  children: [
-                    Text(
-                      value,
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                    verticalSpaceSmall,
-                  ],
-                );
-              },
-            ),
-            _busy
-                ? const CircularProgressIndicator()
-                : ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                    ),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() => _busy = true);
-                        await widget.onSubmit();
-                        setState(() => _busy = false);
-                      }
-                    },
-                    child: Text(widget.submitText),
-                  ),
+            if (widget.responseMessage != null)
+              ValueListenableBuilder<String>(
+                valueListenable: widget.responseMessage!,
+                builder: (context, value, child) {
+                  if (value.isEmpty) return const SizedBox.shrink();
+                  return Column(
+                    children: [
+                      Text(
+                        value,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                      verticalSpaceSmall,
+                    ],
+                  );
+                },
+              ),
+            if (_busy && widget.onSubmit != null)
+              const CircularProgressIndicator(),
+            if (!_busy && widget.onSubmit != null)
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    setState(() => _busy = true);
+                    await widget.onSubmit?.call();
+                    setState(() => _busy = false);
+                  }
+                },
+                child: Text(widget.submitText),
+              ),
             verticalSpaceMedium,
             if (widget.onAlreadyHaveAccount != null)
               Align(
