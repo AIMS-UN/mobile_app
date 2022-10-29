@@ -17,8 +17,10 @@ Widget formEmail(TextEditingController controller) {
 Widget formPassword(TextEditingController controller) {
   return TextFormField(
     decoration: const InputDecoration(
-      labelText: 'Password',
-      hintText: 'Enter your password',
+      // labelText: 'Password',
+      labelText: 'Contraseña',
+      // hintText: 'Enter your password',
+      hintText: 'Ingrese su contraseña',
     ),
     validator: validatePassword,
     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -31,8 +33,10 @@ Widget formConfirmPassword(
     TextEditingController controller, TextEditingController confirm) {
   return TextFormField(
     decoration: const InputDecoration(
-      labelText: 'Confirm Password',
-      hintText: 'Confirm your password',
+      // labelText: 'Confirm Password',
+      labelText: 'Confirmar contraseña',
+      // hintText: 'Confirm your password',
+      hintText: 'Confirme su contraseña',
     ),
     validator: (value) => validateConfirmPassword(value, confirm.text),
     onChanged: (value) => controller.text = value,
@@ -44,8 +48,10 @@ Widget formConfirmPassword(
 Widget formUsername(TextEditingController controller) {
   TextFormField username = TextFormField(
     decoration: const InputDecoration(
-      labelText: 'Username',
-      hintText: 'Enter your username',
+      // labelText: 'Username',
+      labelText: 'Nombre de usuario',
+      // hintText: 'Enter your username',
+      hintText: 'Ingrese su nombre de usuario',
     ),
     validator: validateUsername,
     autovalidateMode: AutovalidateMode.onUserInteraction,

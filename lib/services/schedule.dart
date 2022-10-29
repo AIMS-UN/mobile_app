@@ -26,10 +26,11 @@ Future<Map<String, dynamic>> mySchedule() async {
       }
     }
   ''');
+  print("RESPONSE: $response");
   if (response['data'] == null) {
     return {'error': response['errors'][0]['message']};
   }
-  return response['data']['getMySchedule'];
+  return {'data': response['data']['getMySchedule']};
 }
 
 Future<Map<String, dynamic>> myScheduleBySemester(String semester) async {
@@ -61,5 +62,5 @@ Future<Map<String, dynamic>> myScheduleBySemester(String semester) async {
   if (response['data'] == null) {
     return {'error': response['errors'][0]['message']};
   }
-  return response['data']['getMyScheduleBySemester'];
+  return {'data': response['data']['getMyScheduleBySemester']};
 }

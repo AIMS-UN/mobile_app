@@ -4,7 +4,7 @@ Future<Map<String, dynamic>> getGradingCategories(
     {String? subjectCode, String? groupId}) async {
   final response = await api.query('''
     query {
-      getGradingCategories(subject_code: "$subjectCode", group_id: "$groupId") {
+      getGradingCategories {
         id
         name
         weight
@@ -42,7 +42,7 @@ Future<Map<String, dynamic>> getGrades(
     {String? studentId, String? categoryId}) async {
   final response = await api.query('''
     query {
-      getGrades(student_id: "$studentId", category_id: "$categoryId") {
+      getGrades {
         id
         score
         category_id

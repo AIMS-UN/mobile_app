@@ -1,8 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
-import '/widgets/background.dart';
+import 'grading_view.dart';
+import 'home_view.dart';
 import 'profile_view.dart';
+import 'schedule_view.dart';
 import 'subject_search_view.dart';
 
 class Menu extends StatefulWidget {
@@ -45,9 +47,9 @@ class _MenuState extends State<Menu> {
     ];
 
     const children = <Widget>[
-      Background(child: Text('Home')),
-      Background(child: Text('Calendar')),
-      Background(child: Text('Grading')),
+      GradingView(),
+      ScheduleView(),
+      HomeView(),
       SubjectSearchView(),
       ProfileView(),
     ];

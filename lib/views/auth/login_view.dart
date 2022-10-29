@@ -40,19 +40,19 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       body: Background(
         child: FormLayout(
-          title: 'Login',
-          submitText: 'Login',
+          title: 'Iniciar sesión',
+          submitText: 'Iniciar sesión',
           form: <Widget>[
             formUsername(_usernameController),
             verticalSpaceSmall,
             formPassword(_passwordController),
             verticalSpaceSmall,
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "menu");
-              },
-              child: const Text("Go to menu"),
-            )
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, "menu");
+            //   },
+            //   child: const Text("Go to menu"),
+            // )
           ],
           responseMessage: _responseMessage,
           onCreateAccount: () => Navigator.pushNamed(context, "register"),

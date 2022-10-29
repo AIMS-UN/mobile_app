@@ -43,8 +43,8 @@ class _SignupViewState extends State<SignupView> {
     return Scaffold(
       body: Background(
         child: FormLayout(
-          title: 'Signup',
-          submitText: 'Signup',
+          title: 'Crear cuenta',
+          submitText: 'Crear cuenta',
           form: <Widget>[
             formUsername(_usernameController),
             verticalSpaceSmall,

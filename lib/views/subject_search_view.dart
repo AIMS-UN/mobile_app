@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '/layouts/auth_form.dart';
+import '/services/subjects.dart' as subject_service;
 import '/shared/form/form_helpers.dart';
 import '/shared/ui_helpers.dart';
-import '/services/subjects.dart' as subject_service;
 
 class SubjectSearchView extends StatefulWidget {
   const SubjectSearchView({super.key});
@@ -21,7 +20,6 @@ class _SubjectSearchViewState extends State<SubjectSearchView> {
   _getSubjects() async {
     final subjects = await subject_service.getSubjects();
 
-    print(subjects);
     setState(() {
       _subjects = subjects;
     });
@@ -37,9 +35,9 @@ class _SubjectSearchViewState extends State<SubjectSearchView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Subject Search',
-          style: Theme.of(context).textTheme.headline6,
+        title: const Text(
+          'Búsqueda de asignaturas',
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
@@ -57,32 +55,26 @@ class _SubjectSearchViewState extends State<SubjectSearchView> {
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Expanded(
-                        child: FormLayout(
-                          form: [
-                            formDropdown(
-                              label: 'Career',
-                              items: _subjects['data']
-                                  .map((subject) => subject['careerId'])
-                                  .toSet()
-                                  .toList(),
-                              selectedItem: _subjects['data'][0]['careerId'],
-                              controller: _careerIdController,
-                            ),
-                            verticalSpaceRegular,
-                            formDropdown(
-                              label: 'Subject',
-                              items: _subjects['data']
-                                  // .where((subject) =>
-                                  //     subject['careerId'] == _careerIdController.text)
-                                  .map((subject) => subject['subjectName'])
-                                  .toSet()
-                                  .toList(),
-                              selectedItem: _subjects['data'][0]['subjectName'],
-                              controller: _subjectNameController,
-                            ),
-                          ],
-                        ),
+                      formDropdown(
+                        label: 'Career',
+                        items: _subjects['data']
+                            .map((subject) => subject['careerId'])
+                            .toSet()
+                            .toList(),
+                        selectedItem: _subjects['data'][0]['careerId'],
+                        controller: _careerIdController,
+                      ),
+                      verticalSpaceRegular,
+                      formDropdown(
+                        label: 'Subject',
+                        items: _subjects['data']
+                            // .where((subject) =>
+                            //     subject['careerId'] == _careerIdController.text)
+                            .map((subject) => subject['subjectName'])
+                            .toSet()
+                            .toList(),
+                        selectedItem: _subjects['data'][0]['subjectName'],
+                        controller: _subjectNameController,
                       ),
                     ],
                   ),
@@ -97,6 +89,16 @@ class _SubjectSearchViewState extends State<SubjectSearchView> {
                       onPressed: () {
                         print("careerId: ${_careerIdController.text}");
                         print("subjectName: ${_subjectNameController.text}");
+                        // update the list of subjects with the new filters
+                        setState(() {
+                          _subjects['data'] = _subjects['data']
+                              .where((subject) =>
+                                  subject['careerId'] ==
+                                      _careerIdController.text &&
+                                  subject['subjectName'] ==
+                                      _subjectNameController.text)
+                              .toList();
+                        });
                         Navigator.of(context).pop();
                       },
                       child: const Text('Filter'),
@@ -110,22 +112,34 @@ class _SubjectSearchViewState extends State<SubjectSearchView> {
       ),
       body: Column(
         children: [
-          _subjects != {} && _subjects['data'] != null
-              ? Expanded(
-                  child: ListView.builder(
-                    itemCount: _subjects['data']?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      final subject = _subjects['data'][index];
-                      return ListTile(
-                        title: Text(subject['subjectName']),
-                        subtitle: Text(subject['subjectCode']),
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text(subject['subjectName']),
-                                    content:
-                                        SubjectDetailView(subject: subject),
+          verticalSpaceMedium,
+          if (_subjects != {} && _subjects['data'] != null)
+            Expanded(
+              child: ListView.builder(
+                itemCount: _subjects['data'].length,
+                itemBuilder: (context, index) {
+                  final subject = _subjects['data'][index];
+                  return Card(
+                    child: ExpansionTile(
+                      title: Text(
+                        '${subject['subjectCode']} - ${subject['subjectName']}',
+                      ),
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: subject['groups'].length,
+                          itemBuilder: (context, index) {
+                            final group = subject['groups'][index];
+                            return ListTile(
+                              title: Text('Grupo ${index + 1}'),
+                              subtitle: Text('Teacher: ${group['teacherId']}'),
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text('Grupo ${index + 1}'),
+                                    content: GroupScheduleWidget(
+                                        group: group, index: index),
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
@@ -134,71 +148,39 @@ class _SubjectSearchViewState extends State<SubjectSearchView> {
                                         child: const Text('Close'),
                                       ),
                                     ],
-                                  ));
-                        },
-                      );
-                    },
-                  ),
-                )
-              : Container(),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            )
         ],
       ),
     );
   }
 }
 
-class SubjectDetailView extends StatelessWidget {
-  const SubjectDetailView({super.key, required this.subject});
-
-  final Map<String, dynamic> subject;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-        itemCount: subject['groups'].length,
-        itemBuilder: (context, index) {
-          final group = subject['groups'][index];
-          return ListTile(
-            title: Text('Group ${index + 1}'),
-            subtitle: Text('Teacher: ${group['teacherId']}'),
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        title: Text('Group ${index + 1}'),
-                        content: GroupDetailView(group: group, index: index),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('Close'),
-                          ),
-                        ],
-                      ));
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class GroupDetailView extends StatelessWidget {
-  const GroupDetailView({super.key, required this.group, required this.index});
+class GroupScheduleWidget extends StatelessWidget {
+  const GroupScheduleWidget(
+      {super.key, required this.group, required this.index});
 
   final Map<String, dynamic> group;
   final int index;
 
   static const Map<int, String> _days = {
-    1: 'Monday',
-    2: 'Tuesday',
-    3: 'Wednesday',
-    4: 'Thursday',
-    5: 'Friday',
-    6: 'Saturday',
-    7: 'Sunday',
+    1: 'Lunes',
+    2: 'Martes',
+    3: 'Miércoles',
+    4: 'Jueves',
+    5: 'Viernes',
+    6: 'Sábado',
+    7: 'Domingo',
   };
 
   @override

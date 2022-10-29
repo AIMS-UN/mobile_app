@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '/widgets/background.dart';
 import '/shared/ui_helpers.dart';
 
 class FormLayout extends StatefulWidget {
@@ -111,7 +110,8 @@ class _FormLayoutState extends State<FormLayout> {
                 child: GestureDetector(
                   onTap: widget.onAlreadyHaveAccount,
                   child: Text(
-                    'Already have an account? Login',
+                    // 'Already have an account? Login',
+                    '¿Ya tienes una cuenta? Inicia sesión',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
@@ -127,7 +127,8 @@ class _FormLayoutState extends State<FormLayout> {
                 child: GestureDetector(
                   onTap: widget.onCreateAccount,
                   child: Text(
-                    'Don\'t have an account? Create one',
+                    // 'Don\'t have an account? Create one',
+                    '¿No tienes una cuenta? Crea una',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14,
@@ -143,9 +144,12 @@ class _FormLayoutState extends State<FormLayout> {
               Text(
                 'By signing up, you agree to our Terms of Service and Privacy Policy',
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  // color: Theme.of(context).primaryColor, black
+                  color: Colors.black,
                   fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                  // fontWeight: FontWeight.w600,
+                  // bold
+                  fontWeight: FontWeight.bold,
                 ),
               ),
           ],
