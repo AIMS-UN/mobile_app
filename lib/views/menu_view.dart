@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '/widgets/background.dart';
 import 'profile_view.dart';
+import 'subject_search_view.dart';
 
 class Menu extends StatefulWidget {
   const Menu(this.number, {super.key});
@@ -47,7 +48,7 @@ class _MenuState extends State<Menu> {
       Background(child: Text('Home')),
       Background(child: Text('Calendar')),
       Background(child: Text('Grading')),
-      Background(child: Text('Search')),
+      SubjectSearchView(),
       ProfileView(),
     ];
 
