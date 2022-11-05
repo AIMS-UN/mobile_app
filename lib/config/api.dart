@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-const String baseUrl = 'http://localhost:3000/graphql';
+const String baseUrl = 'http://localhost:3002/graphql';
 
 Map<String, String> headers = {
   'Content-Type': 'application/json',
