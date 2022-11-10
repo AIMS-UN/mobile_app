@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '/themes/light.dart';
 import 'auth/login_view.dart';
-import 'auth/signup_view.dart';
 import 'menu_view.dart';
 
 class MyApp extends StatelessWidget {
@@ -17,7 +16,6 @@ class MyApp extends StatelessWidget {
       initialRoute: "login",
       routes: {
         "login": (context) => const LoginView(),
-        "register": (context) => const SignupView(),
         "menu": ((context) => const Menu(2))
       },
     );

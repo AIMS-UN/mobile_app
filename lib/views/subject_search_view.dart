@@ -43,72 +43,72 @@ class _SubjectSearchViewState extends State<SubjectSearchView> {
         foregroundColor: Colors.black,
         automaticallyImplyLeading: false,
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.filter_alt_rounded),
-            onPressed: () async {
-              await _getSubjects();
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Filter'),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      formDropdown(
-                        label: 'Career',
-                        items: _subjects['data']
-                            .map((subject) => subject['careerId'])
-                            .toSet()
-                            .toList(),
-                        selectedItem: _subjects['data'][0]['careerId'],
-                        controller: _careerIdController,
-                      ),
-                      verticalSpaceRegular,
-                      formDropdown(
-                        label: 'Subject',
-                        items: _subjects['data']
-                            // .where((subject) =>
-                            //     subject['careerId'] == _careerIdController.text)
-                            .map((subject) => subject['subjectName'])
-                            .toSet()
-                            .toList(),
-                        selectedItem: _subjects['data'][0]['subjectName'],
-                        controller: _subjectNameController,
-                      ),
-                    ],
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        print("careerId: ${_careerIdController.text}");
-                        print("subjectName: ${_subjectNameController.text}");
-                        // update the list of subjects with the new filters
-                        setState(() {
-                          _subjects['data'] = _subjects['data']
-                              .where((subject) =>
-                                  subject['careerId'] ==
-                                      _careerIdController.text &&
-                                  subject['subjectName'] ==
-                                      _subjectNameController.text)
-                              .toList();
-                        });
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Filter'),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: const Icon(Icons.filter_alt_rounded),
+        //     onPressed: () async {
+        //       await _getSubjects();
+        //       showDialog(
+        //         context: context,
+        //         builder: (context) => AlertDialog(
+        //           title: const Text('Filter'),
+        //           content: Column(
+        //             mainAxisSize: MainAxisSize.min,
+        //             children: <Widget>[
+        //               formDropdown(
+        //                 label: 'Career',
+        //                 items: _subjects['data']
+        //                     .map((subject) => subject['careerId'])
+        //                     .toSet()
+        //                     .toList(),
+        //                 selectedItem: _subjects['data'][0]['careerId'],
+        //                 controller: _careerIdController,
+        //               ),
+        //               verticalSpaceRegular,
+        //               formDropdown(
+        //                 label: 'Subject',
+        //                 items: _subjects['data']
+        //                     // .where((subject) =>
+        //                     //     subject['careerId'] == _careerIdController.text)
+        //                     .map((subject) => subject['subjectName'])
+        //                     .toSet()
+        //                     .toList(),
+        //                 selectedItem: _subjects['data'][0]['subjectName'],
+        //                 controller: _subjectNameController,
+        //               ),
+        //             ],
+        //           ),
+        //           actions: <Widget>[
+        //             TextButton(
+        //               onPressed: () {
+        //                 Navigator.of(context).pop();
+        //               },
+        //               child: const Text('Cancel'),
+        //             ),
+        //             TextButton(
+        //               onPressed: () {
+        //                 print("careerId: ${_careerIdController.text}");
+        //                 print("subjectName: ${_subjectNameController.text}");
+        //                 // update the list of subjects with the new filters
+        //                 setState(() {
+        //                   _subjects['data'] = _subjects['data']
+        //                       .where((subject) =>
+        //                           subject['careerId'] ==
+        //                               _careerIdController.text &&
+        //                           subject['subjectName'] ==
+        //                               _subjectNameController.text)
+        //                       .toList();
+        //                 });
+        //                 Navigator.of(context).pop();
+        //               },
+        //               child: const Text('Filter'),
+        //             ),
+        //           ],
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // ],
       ),
       body: Column(
         children: [
