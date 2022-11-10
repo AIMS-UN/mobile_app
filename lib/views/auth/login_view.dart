@@ -55,7 +55,6 @@ class _LoginViewState extends State<LoginView> {
             // )
           ],
           responseMessage: _responseMessage,
-          onCreateAccount: () => Navigator.pushNamed(context, "register"),
           onSubmit: () => _onSubmit(() => Navigator.pushNamed(context, "menu")),
         ),
       ),

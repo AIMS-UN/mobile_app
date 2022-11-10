@@ -99,9 +99,9 @@ class _ProfileViewState extends State<ProfileView> {
                         fontSize: 18,
                       ),
                     ),
-                    const Text(
-                      "1007604251",
-                      style: TextStyle(
+                    Text(
+                      "${_profile["data"]["doc_id"]}",
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),

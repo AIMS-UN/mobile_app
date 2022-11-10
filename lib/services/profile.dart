@@ -5,6 +5,7 @@ Future<Map<String, dynamic>> getProfiles() async {
     query {
       getProfiles {
         user_id
+        doc_id
         name
         lastname
         email
@@ -32,6 +33,7 @@ Future<Map<String, dynamic>> getMyProfile() async {
     query {
       getMyProfile {
         user_id
+        doc_id
         name
         lastname
         email
